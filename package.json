@@ -1,0 +1,29 @@
+{
+  "name": "flowforge",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "docker:compose:up": "docker compose -f docker/compose.yml up --build",
+    "docker:compose:down": "docker compose -f docker/compose.yml down -v --remove-orphans",
+    "prisma:generate": "pnpm --filter @flowforge/api prisma:generate",
+    "seed": "pnpm --filter @flowforge/api seed"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "prettier": "^3.3.2",
+    "eslint": "^9.7.0",
+    "typescript": "^5.5.4"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

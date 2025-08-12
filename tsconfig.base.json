@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "outDir": "dist",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@flowforge/common/*": ["packages/common/src/*"],
+      "@flowforge/sdk/*": ["packages/sdk/src/*"],
+      "@flowforge/nodes-core/*": ["packages/nodes-core/src/*"]
+    }
+  }
+}

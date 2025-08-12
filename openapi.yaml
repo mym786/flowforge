@@ -1,0 +1,21 @@
+openapi: 3.0.3
+info:
+  title: FlowForge API
+  version: 0.1.0
+paths:
+  /api/workflows:
+    get:
+      summary: List workflows
+      responses: { "200": { "description": "OK" } }
+    post:
+      summary: Create workflow
+      responses: { "201": { "description": "Created" } }
+  /api/workflows/{id}:
+    get: { summary: Get workflow, responses: { "200": { "description": "OK" }, "404": { "description": "Not found" } } }
+    put: { summary: Update workflow, responses: { "200": { "description": "OK" } } }
+    delete: { summary: Delete workflow, responses: { "204": { "description": "No Content" } } }
+  /api/execute/{id}:
+    post: { summary: Start execution, responses: { "200": { "description": "Queued" } } }
+  /api/credentials:
+    get: { summary: List credentials (masked), responses: { "200": { "description": "OK" } } }
+    post: { summary: Create credentials, responses: { "201": { "description": "Created" } } }

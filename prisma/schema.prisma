@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../apps/api/node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Workflow {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  version      Int       @default(1)
+  definition   Json      // nodes, edges
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  createdById  String?
+  runs         Run[]
+  isPublic     Boolean   @default(false)
+}
+
+model Run {
+  id           String    @id @default(cuid())
+  workflowId   String
+  status       RunStatus @default(PENDING)
+  startedAt    DateTime? 
+  finishedAt   DateTime?
+  error        String?
+  logs         Json?
+  checkpoints  Json?
+  input        Json?
+  output       Json?
+  workerId     String?
+  attempts     Int       @default(0)
+  Workflow     Workflow  @relation(fields: [workflowId], references: [id])
+}
+
+enum RunStatus {
+  PENDING
+  RUNNING
+  PAUSED
+  SUCCEEDED
+  FAILED
+  CANCELED
+}
+
+model Credential {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // e.g., smtp, http, postgres, s3
+  projectId   String?
+  dataEnc     Bytes    // encrypted payload (libsodium)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+}
+
+model Plugin {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  version     String
+  enabled     Boolean  @default(true)
+  meta        Json?
+  installedAt DateTime @default(now())
+}
+
+model AuditEvent {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entity     String
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+}
+
+model ShareLink {
+  id         String   @id @default(cuid())
+  workflowId String
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  Workflow   Workflow @relation(fields: [workflowId], references: [id])
+}
+
