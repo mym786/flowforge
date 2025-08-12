@@ -20,7 +20,8 @@
     "turbo": "^2.0.0",
     "prettier": "^3.3.2",
     "eslint": "^9.7.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^1.6.1"
   },
   "workspaces": [
     "apps/*",
